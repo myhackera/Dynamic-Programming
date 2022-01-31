@@ -1,0 +1,45 @@
+RECURSIVE SOLUTION
+---------------------------
+
+a = [...]
+MarixChainOrder(arr, 0, n-1)
+ 
+def MatrixChainOrder(arr, i, j):
+ 
+    if i == j:
+        return 0
+ 
+    mn = sys.maxsize
+    for k in range(i, j):
+ 
+        count = (MatrixChainOrder(arr, i, k) + MatrixChainOrder(arr, k + 1, j) + arr[i-1] * arr[k] * arr[j])
+        mn = min(mn, count
+        
+    return min
+
+
+MEMOIZATION 
+------------------------
+
+import sys
+dp = [[-1 for i in range(100)] for j in range(100)]
+
+def matrixChainMemoised(arr, i, j):
+    if(i == j):
+        return 0
+     
+    if(dp[i][j] != -1):
+        return dp[i][j]
+     
+    dp[i][j] = sys.maxsize
+     
+    for k in range(i,j):
+        dp[i][j] = min(dp[i][j], matrixChainMemoised(arr, i, k) + matrixChainMemoised(arr, k + 1, j)+ arr[i - 1] * arr[k] * arr[j])
+     
+    return dp[i][j]
+ 
+def MatrixChainOrder(arr,n):
+    i = 1
+    j = n - 1   
+    return matrixChainMemoised(arr, i, j)
+ 
