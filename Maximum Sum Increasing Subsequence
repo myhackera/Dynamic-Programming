@@ -1,0 +1,16 @@
+class Solution:
+	def maxSumIS(self, Arr, n):
+		
+		dp = [0]*n
+		for i in range(n):
+		    maxi = 0
+		    
+		    for j in range(i):
+		        
+		        if Arr[i] > Arr[j]:
+		            if dp[j] > maxi:
+		                maxi = dp[j]
+		                
+		    dp[i] = maxi + Arr[i]
+		    
+		return max(dp)
