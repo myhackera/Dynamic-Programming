@@ -1,0 +1,51 @@
+SOLUTION 1.)
+==================================================>>>>>>>
+
+def f(days, last, points):
+    if days == 0:
+        maxi = 0
+        for i in range(3):
+            if i != last:
+                maxi = max(maxi, points[days][i])
+        return maxi
+    
+    maxi = 0
+    for task in range(3):
+        if task != last:
+            point = points[days][task] + f(days-1, task, points)
+            maxi = max(maxi, point)
+    return maxi
+        
+  
+def ninjaTraining(n: int, points: List[List[int]]) -> int:
+    return f(n-1 , 3, points)
+    
+SOLTUION 2.) 
+===============================================>>>>>>
+
+ memoization code:
+ :::::::::::::::::::::::::::
+from typing import *
+def f(days, last, points, dp):
+    if days == 0:
+        maxi = 0
+        for i in range(3):
+            if i != last:
+                maxi = max(maxi, points[days][i])
+        return maxi
+    
+    if dp[days][last] != -1:
+        return dp[days][last]
+    
+    maxi = 0
+    for task in range(3):
+        if task != last:
+            point = points[days][task] + f(days-1, task, points, dp)
+            maxi = max(maxi, point)
+            
+    dp[days][last] = maxi
+    return dp[days][last]    
+  
+def ninjaTraining(n: int, points: List[List[int]]) -> int:
+    dp = [[-1]*(4) for i in range(n)]
+    return f(n-1 , 3, points, dp)
