@@ -1,0 +1,17 @@
+class Solution:
+    def stock(self, index, transNo, prices, n, k, dp):
+        
+        if index == n or transNo == 2*k:
+            return 0
+        
+        if dp[index][transNo] != -1:
+            return dp[index][transNo]
+        
+        if transNo%2 == 0:
+            dp[index][transNo] = max( (-1)*prices[index] + self.stock(index+1, transNo+1, prices, n, k, dp), self.stock(index+1, transNo, prices, n, k, dp) )
+            return dp[index][transNo]
+
+        dp[index][transNo] = max( prices[index] + self.stock(index+1, transNo+1, prices, n, k, dp), self.stock(index+1, transNo, prices, n, k, dp) )
+        
+        return dp[index][transNo]
+                       
