@@ -1,0 +1,80 @@
+SOLUTION 1.)
+=============>>>>>>
+
+class Solution:
+    def stock(self, index, buy, n, a):
+        
+        if index == n:
+            return 0
+        
+        if buy:
+            profit = max( (-1)*a[index] + self.stock(index+1, 0, n, a), self.stock(index+1, 1, n, a))
+        else:
+            profit = max( a[index] + self.stock(index+1, 1, n, a), self.stock(index+1,0, n, a))
+        
+        return profit
+            
+        
+    def maxProfit(self, a: List[int]) -> int:
+        
+        n = len(a)
+        return self.stock(0, 1, n, a)
+            
+            
+TC : O(2**N)
+SC : O(N) => Recursive space
+
+SOLUTION 2.)
+===============>>>>>
+
+class Solution:
+    def stock(self, index, buy, n, a, dp):
+        
+        if index == n:
+            return 0
+        
+        if dp[index][buy] != -1:
+            return dp[index][buy]
+        
+        if buy:
+            profit = max( (-1)*a[index] + self.stock(index+1, 0, n, a, dp), self.stock(index+1, 1, n, a, dp))
+        else:
+            profit = max( a[index] + self.stock(index+1, 1, n, a, dp), self.stock(index+1,0, n, a, dp))
+        
+        dp[index][buy] = profit
+        return dp[index][buy]
+            
+        
+    def maxProfit(self, a: List[int]) -> int:
+        
+        n = len(a)
+        dp = [[-1]*2 for _ in range(n)]
+        return self.stock(0, 1, n, a, dp)
+            
+SOLUTION 3.)
+==============>>>>>>>
+
+class Solution:
+        
+    def maxProfit(self, a: List[int]) -> int:
+        
+        n = len(a)
+        dp = [[0]*2 for _ in range(n+1)]
+        dp[n][0] = dp[n][1] = 0
+        
+        for index in range(n-1, -1, -1):
+
+            for buy in range(0, 2):
+                
+                profit = 0
+            
+                if buy:
+                    profit = max( (-1)*a[index] + dp[index+1][0], dp[index+1][1] )
+                else:
+                    profit = max( a[index] + dp[index+1][1], dp[index+1][0])
+
+                dp[index][buy] = profit
+                
+        return dp[0][1]
+            
+        
