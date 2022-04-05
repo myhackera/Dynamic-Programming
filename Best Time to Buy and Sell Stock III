@@ -21,6 +21,7 @@ class Solution:
         n = len(a)
         count = 2
         return self.stock(0, 1, n, a, count)
+        
 
 SOLUTION 2.)
 ==============>>>>>>
@@ -49,3 +50,6 @@ class Solution:
         count = 2
         dp = [[[-1]*3 for _ in range(2)] for _ in range(n)]
         return self.stock(0, 1, n, a, count, dp)
+
+TC : O(N*2*3)
+SC : O(N*2*3) + auxiliary space
