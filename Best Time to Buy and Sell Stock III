@@ -1,0 +1,23 @@
+SOLUTION 1.)
+=============>>>>>>
+
+class Solution:
+    def stock(self, index, buy, n, a, count):
+        
+        if count == 0:
+            return 0
+        if index == n:
+            return 0
+        
+        if buy:
+            profit = max( (-1)*a[index] + self.stock(index+1, 0, n, a, count), self.stock(index+1, 1, n, a, count))
+        else:
+            profit = max( a[index] + self.stock(index+1, 1, n, a, count-1), self.stock(index+1,0, n, a, count))
+        
+        return profit
+            
+    def maxProfit(self, a: List[int]) -> int:
+        
+        n = len(a)
+        count = 2
+        return self.stock(0, 1, n, a, count)
