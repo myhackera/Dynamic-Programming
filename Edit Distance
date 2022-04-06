@@ -17,7 +17,7 @@ class Solution:
             if word1[i] == word2[j]:
                 return check(i-1, j-1)
             else:
-                return 1 + min(check(i-1, j), check(i,j-1), check(i-1, j-1))
+                return 1 + min(check(i-1, j), check(i,j-1), check(i-1, j-1))   # delete word1, insert character in word1, update character in word1
                 
                 
         return check(m-1, n-1)
