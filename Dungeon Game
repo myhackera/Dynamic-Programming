@@ -1,0 +1,61 @@
+SOLUTION 1.)
+=============>>>>
+
+import sys
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        
+        m = len(dungeon)
+        n = len(dungeon[0])
+        
+        def solve(i, j):
+            
+            if i == m-1 and j == n-1:
+                return (-1)*dungeon[i][j]+1 if dungeon[i][j] <= 0 else 1
+            if i > m-1 or j > n-1:
+                return sys.maxsize
+            
+            right = solve(i, j+1)
+            down = solve(i+1, j)
+            
+            minHealth = min(right, down) - dungeon[i][j]
+            return 1 if minHealth <= 0 else minHealth
+        
+        return solve(0, 0)
+        
+
+SOLUTION 2.)
+===============>>>>
+
+
+import sys
+class Solution:
+    def calculateMinimumHP(self, dungeon: List[List[int]]) -> int:
+        
+        m = len(dungeon)
+        n = len(dungeon[0])
+        dp = [[-1]*(201) for _ in range(201)]
+        
+        def solve(i, j):
+            
+            if i == m-1 and j == n-1:
+                return (-1)*dungeon[i][j]+1 if dungeon[i][j] <= 0 else 1
+            if i > m-1 or j > n-1:
+                return sys.maxsize
+            
+            if dp[i][j] != -1:
+                return dp[i][j]
+            
+            right = solve(i, j+1)
+            down = solve(i+1, j)
+            
+            minHealth = min(right, down) - dungeon[i][j]
+            
+            if minHealth <= 0:
+                dp[i][j] = 1
+            else:
+                dp[i][j] = minHealth
+                
+            return dp[i][j]
+        
+        return solve(0, 0)
