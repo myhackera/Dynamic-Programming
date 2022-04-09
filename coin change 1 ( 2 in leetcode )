@@ -1,3 +1,26 @@
+Recursive solution 
+===================>>>>
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        
+        def solve(n, amount):
+
+            if amount == 0:
+                return 1
+            if amount < 0:
+                return 0
+            if amount >= 1 and n <= 0:
+                return 0
+
+            return solve(n-1, amount) + solve(n, amount-coins[n-1])
+        
+        return solve(len(coins), amount)
+            
+
+Tabulation solution
+=====================>>>>
+
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
         
