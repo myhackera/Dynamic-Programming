@@ -50,7 +50,10 @@ class Solution:
         n = len(a)
         dp = [[-1]*2 for _ in range(n)]
         return self.stock(0, 1, n, a, dp)
-            
+        
+TC : O(n*2)
+SC : O(n*2) + O(n)
+             
 SOLUTION 3.)
 ==============>>>>>>>
 
@@ -77,4 +80,5 @@ class Solution:
                 
         return dp[0][1]
             
-        
+TC : O(n*2)
+SC : O(n*2)
