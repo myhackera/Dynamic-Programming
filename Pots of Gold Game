@@ -1,0 +1,43 @@
+SOLUTION 1.) 
+=================>>>>>>
+
+class Solution:
+    def solve(self, arr, i, j):
+        
+        if i==j:
+            return arr[i]
+        elif i > j:
+            return 0
+        else:
+            left = arr[i] + min(self.solve(arr, i+2, j), self.solve(arr, i+1, j-1))
+            right = arr[j] + min(self.solve(arr, i+1, j-1), self.solve(arr, i, j-2))
+            return max(left, right)
+        
+        
+    def maxCoins(self,arr, n):
+        return self.solve(arr, 0, n-1
+
+
+
+SOLUTION 2.) 
+==================>>>>>
+
+class Solution:
+    def solve(self, arr, i, j, dp):
+        
+        if i==j:
+            return arr[i]
+        elif i > j:
+            return 0
+        elif dp[i][j] != -1:
+            return dp[i][j]
+        else:
+            left = arr[i] + min(self.solve(arr, i+2, j, dp), self.solve(arr, i+1, j-1, dp))
+            right = arr[j] + min(self.solve(arr, i+1, j-1, dp), self.solve(arr, i, j-2, dp))
+            dp[i][j] = max(left, right)
+            return dp[i][j]
+        
+    def maxCoins(self,arr, n):
+        dp = [[-1 for _ in range(n)] for _ in range(n)]
+        return self.solve(arr, 0, n-1, dp)
+        
