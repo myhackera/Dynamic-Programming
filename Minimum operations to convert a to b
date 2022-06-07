@@ -1,0 +1,21 @@
+class Solution:
+    def lcs(self, a1, a2, n, m):
+        
+        dp = [[0]*(m+1) for i in range(n+1)]
+        
+        for i in range(n+1):
+            for j in range(m+1):
+                
+                if i == 0 or j == 0:
+                    dp[i][j] = 0
+                elif a1[i-1] == a2[j-1]:
+                    dp[i][j] = 1 + dp[i-1][j-1]
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+                    
+        return dp[n][m]
+    
+    def minInsAndDel(self, A, B, N, M):
+        
+        return N+M-2*self.lcs(A, B, N, M)
+        
