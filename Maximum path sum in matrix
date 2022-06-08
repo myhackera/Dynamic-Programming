@@ -1,0 +1,47 @@
+RECURSIVE SOLUTION 
+===================>>>>>>>
+
+class Solution:
+    def pathsum(self,mat ,i, j, n):
+        
+        if i < 0 or j < 0 or i > n-1 or j > n-1:
+            return 0
+        elif i == n-1:
+            return mat[i][j]
+        else:
+            return mat[i][j] + max(self.pathsum(mat, i+1, j, n), self.pathsum(mat, i+1, j-1, n), self.pathsum(mat, i+1, j+1, n))
+        
+    def maximumPath(self, N,Matrix):
+       
+          maxPath = 0
+          for i in range(N):
+              maxPath = max(self.pathsum(Matrix, 0, i, N), maxPath)
+          return maxPath
+           
+DP VERSION
+============>>>>>>>>>>>>>
+
+
+import sys
+class Solution:
+    def pathsum(self,mat ,i, j, n, dp):
+        
+        if i < 0 or j < 0 or i > n-1 or j > n-1:
+            return 0
+        elif dp[i][j] != -1:
+            return dp[i][j]
+        elif i == n-1:
+            return mat[i][j]
+        else:
+            dp[i][j] = mat[i][j] + max(self.pathsum(mat, i+1, j, n, dp), self.pathsum(mat, i+1, j-1, n, dp), self.pathsum(mat, i+1, j+1, n, dp))
+            return dp[i][j]
+            
+    def maximumPath(self, N,Matrix):
+        
+        maxPath = -sys.maxsize
+        dp = [[-1]*N for _ in range(N)]
+        
+        for i in range(N):
+            maxPath = max(self.pathsum(Matrix, 0, i, N, dp), maxPath)
+            
+        return maxPath
