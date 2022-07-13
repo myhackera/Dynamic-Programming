@@ -1,0 +1,44 @@
+Recursive Solution
+==================>>>>
+
+class Solution:
+    def is1winner (self, N, arr):
+    
+        def max_score(arr, i, j):
+            
+            if i < j:
+                lr = arr[i] + min(max_score(arr, i+2, j), max_score(arr, i+1, j-1))
+                rr = arr[j] + min(max_score(arr, i, j-2), max_score(arr, i+1, j-1))
+                return max(lr, rr)
+            else:
+                return 0
+        
+        smm = sum(arr)
+        ret = max_score(arr, 0, N-1)
+        return ret > smm-ret
+        
+Memoization Problem
+===================>>>
+
+class Solution:
+    def is1winner (self, N, arr):
+        
+        def max_score(arr, i, j, dp):
+            
+            if i > j:
+                return 0
+            if dp[i][j] != -1:
+                return dp[i][j]
+                
+            lr = arr[i] + min(max_score(arr, i+2, j, dp), max_score(arr, i+1, j-1, dp))
+            rr = arr[j] + min(max_score(arr, i, j-2, dp), max_score(arr, i+1, j-1, dp))
+            dp[i][j] = max(lr, rr)
+            return dp[i][j]
+       
+        smm = sum(arr)
+        dp = [[-1]*N for _ in range(N)]
+        ret = max_score(arr, 0, N-1, dp)
+        return ret > smm-ret
+
+        
+        
