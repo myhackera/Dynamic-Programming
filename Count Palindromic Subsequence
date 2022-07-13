@@ -1,0 +1,46 @@
+Recursive Solution
+==================>>>>
+
+class Solution:
+    def countPs(self,string):
+        i = 0
+        j = len(string)-1
+        
+        def count(s, i, j):
+            if i > j:
+                return 0
+            if i == j:
+                return 1
+            if s[i] == s[j]:
+                return count(s, i+1, j) + count(s, i, j-1) + 1
+            else:
+                return count(s, i+1, j) + count(s, i, j-1) - count(s, i+1, j-1)
+            
+        return count(string, i, j)
+        
+Memoization Solution
+====================>>>>
+
+class Solution:
+    def countPs(self,string):
+        n = len(string)
+        i = 0
+        j = len(string)-1
+        
+        def count(s, i, j, dp):
+            if i > j:
+                return 0
+            if i == j:
+                return 1
+            if dp[i][j] != -1:
+                return dp[i][j]
+            if s[i] == s[j]:
+                dp[i][j] = count(s, i+1, j, dp) + count(s, i, j-1, dp) + 1
+                return dp[i][j]
+            else:
+                dp[i][j] = count(s, i+1, j, dp) + count(s, i, j-1, dp) - count(s, i+1, j-1, dp)
+                return dp[i][j]
+            
+        dp = [[-1 for _ in range(n+1)] for _ in range(n+1)]
+        return count(string, i, j, dp)%1000000007
+
