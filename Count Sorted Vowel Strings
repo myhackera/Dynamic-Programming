@@ -1,0 +1,20 @@
+Variation of count vowels permutation
+
+class Solution:
+    def countVowelStrings(self, n: int) -> int:
+        
+        (a, e, i, o, u) = (1, 1, 1, 1, 1)
+        perm = 2
+        
+        while perm <= n:
+            
+            end_with_a = a+e+i+o+u
+            end_with_e = e+i+o+u
+            end_with_i = i+o+u
+            end_with_o = o+u
+            end_with_u = u
+            
+            (a, e, i, o, u) = (end_with_a, end_with_e, end_with_i, end_with_o, end_with_u)
+            perm += 1
+        
+        return (a+e+i+o+u)%1000000007
