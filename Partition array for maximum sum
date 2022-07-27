@@ -1,0 +1,48 @@
+import sys
+class Solution:
+    def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+        
+        def f(ind, arr, k):
+            
+            if ind == n: return 0
+            l = 0
+            maxi = -sys.maxsize
+            maxsumm = -sys.maxsize
+            for i in range(ind, min(n, ind+k), 1):
+                l += 1
+                maxi = max(maxi, arr[i])
+                summ = l*maxi + f(i+1, arr, k)
+                maxsumm = max(maxsumm, summ)
+            return maxsumm
+        
+        n = len(arr)
+        return f(0, arr, k)
+        
+Memoization code
+================>>>>
+
+import sys
+class Solution:
+    def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+        
+        def f(ind, arr, k):
+            
+            if ind == n: return 0
+            if dp[ind] != 0: return dp[ind]
+            
+            l = 0
+            maxi = -sys.maxsize
+            maxsumm = -sys.maxsize
+            
+            for i in range(ind, min(n, ind+k), 1):
+                l += 1
+                maxi = max(maxi, arr[i])
+                summ = l*maxi + f(i+1, arr, k)
+                maxsumm = max(maxsumm, summ)
+                
+            dp[ind] = maxsumm
+            return dp[ind]
+        
+        n = len(arr)
+        dp = [0]*n
+        return f(0, arr, k)
